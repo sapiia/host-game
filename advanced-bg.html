@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tech Animated Background</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particleCanvas"></canvas>
+  <script>
+    const canvas = document.getElementById('particleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particlesArray;
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      init();
+    });
+
+    const mouse = {
+      x: null,
+      y: null
+    };
+
+    window.addEventListener('mousemove', function(event){
+      mouse.x = event.x;
+      mouse.y = event.y;
+    });
+
+    class Particle {
+      constructor(x,y,size,color){
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.color = color;
+        this.baseX = x;
+        this.baseY = y;
+      }
+
+      draw(){
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+      }
+
+      update(){
+        // follow cursor smoothly
+        if(mouse.x && mouse.y){
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+
+          let forceDirectionX = dx / distance;
+          let forceDirectionY = dy / distance;
+
+          let maxDistance = 150;
+          let force = (maxDistance - distance) / maxDistance;
+          if (force < 0) force = 0;
+
+          let directionX = forceDirectionX * force * 5;
+          let directionY = forceDirectionY * force * 5;
+
+          this.x += directionX;
+          this.y += directionY;
+        }
+
+        // return to base
+        let dx = this.baseX - this.x;
+        let dy = this.baseY - this.y;
+        this.x += dx * 0.02;
+        this.y += dy * 0.02;
+
+        this.draw();
+      }
+    }
+
+    function init(){
+      particlesArray = [];
+      let numberOfParticles = 120;
+      for(let i = 0; i < numberOfParticles; i++){
+        let size = Math.random() * 3 + 1;
+        let x = Math.random() * canvas.width;
+        let y = Math.random() * canvas.height;
+        let color = '#00ffff'; // neon cyan
+        particlesArray.push(new Particle(x,y,size,color));
+      }
+    }
+
+    function connect(){
+      for(let a = 0; a < particlesArray.length; a++){
+        for(let b = a; b < particlesArray.length; b++){
+          let dx = particlesArray[a].x - particlesArray[b].x;
+          let dy = particlesArray[a].y - particlesArray[b].y;
+          let distance = Math.sqrt(dx*dx + dy*dy);
+
+          if(distance < 120){
+            ctx.strokeStyle = 'rgba(0,255,255,' + (1 - distance/120) + ')';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+            ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate(){
+      requestAnimationFrame(animate);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+
+      particlesArray.forEach(p => p.update());
+      connect();
+    }
+
+    init();
+    animate();
+  </script>
+</body>
+</html>

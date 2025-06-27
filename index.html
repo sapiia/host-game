@@ -26,7 +26,7 @@
             border: none;
             border-radius: 10px;
             background-color: #c48e06;
-            color: white;
+            color: rgb(255, 255, 255);
             transition: background-color 0.3s;
         }
         button:hover {
@@ -42,16 +42,25 @@
             gap: 20px;
             height: 180px;
         }
+
+        .animal-card:hover{
+          
+          transform: scale(1.05) rotateY(5deg);
+        }
         .animal-card {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.288);
+            border: 2px solid transparent;
             border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.685);
             padding: 10px;
             width: 200px;
+            transition: transform 0.7s;
         }
         .animal-card img {
             width: 100%;
+            
             border-radius: 10px;
+            height: 330px;
         }
         .animal-card h2 {
             margin-top: 10px;
@@ -85,7 +94,7 @@
       position: absolute;
       width: 6px;
       height: 6px;
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.236);
       border-radius: 50%;
       animation: float 10s linear infinite;
     }
@@ -113,6 +122,8 @@
     <div class="particle" style="left: 50%; animation-delay: 1s;"></div>
     <div class="particle" style="left: 70%; animation-delay: 3s;"></div>
   </div>
+
+  
 
     <h1>🐾 សប្យាយៗជាមួយពិភពកម្សាន្ត 🐾</h1>
     <button onclick="generatePasswords()">តោះក្រឡុកខ្លាឃ្លោក</button>
