@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Password Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #d4fc79, #96e6a1);
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 10px;
+            background-color: #4CAF50;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+            background-color: #45a049;
+        }
+        .passwords {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            height: 180px;
+        }
+        .animal-card {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            width: 200px;
+        }
+        .animal-card img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .animal-card h2 {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🐾 សប្យាយៗជាមួយពិភពកម្សាន្ត 🐾</h1>
+    <button onclick="generatePasswords()">តោះក្រឡុកខ្លាឃ្លោក</button>
+
+    <div class="passwords" id="passwords"></div>
+
+    <script>
+        const animalImages = {
+            Tiger: "https://i.pinimg.com/736x/9d/39/92/9d3992473dd851f50aa57a0bccb3cbdc.jpg",
+            Rooster: "https://i.pinimg.com/736x/89/27/b8/8927b8a7d62a1b26d8484c9742cf37a4.jpg",
+            Fhish: "https://i.pinimg.com/736x/86/84/6f/86846f9469bd2da328f5133617871e6e.jpg",
+            Crap: "https://i.pinimg.com/736x/a3/b3/f6/a3b3f6dbae8b14e5433ecd40590ba6e2.jpg",
+            Shrimp: "https://i.pinimg.com/736x/8f/25/f7/8f25f707ac50afca80b1adfbb071e97b.jpg",
+                "wax gourd": "https://i.pinimg.com/736x/b0/83/27/b0832730e67ea960d4590afd7b8fa4e3.jpg",
+        };
+
+        function generatePasswords() {
+            const animals = ["Tiger", "Rooster", "Fhish", "Crap", "Shrimp", "wax gourd"];
+            let passwordsDiv = document.getElementById('passwords');
+            passwordsDiv.innerHTML = ''; // Clear previous results
+
+            for (let i = 0; i < 3; i++) {
+                const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+                const card = document.createElement('div');
+                card.className = 'animal-card';
+                card.innerHTML = `
+                    <img src="${animalImages[randomAnimal]}" alt="${randomAnimal}">
+                    <h2>${randomAnimal}</h2>
+                `;
+                passwordsDiv.appendChild(card);
+            }
+        }
+    </script>
+
+</body>
+</html>
